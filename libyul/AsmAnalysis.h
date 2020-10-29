@@ -26,7 +26,7 @@
 
 #include <libyul/Dialect.h>
 #include <libyul/AsmScope.h>
-#include <libyul/AsmDataForward.h>
+#include <libyul/ASTForward.h>
 
 #include <libyul/backends/evm/AbstractAssembly.h>
 #include <libyul/backends/evm/EVMDialect.h>
