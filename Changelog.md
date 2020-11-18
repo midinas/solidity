@@ -3,6 +3,8 @@
 Compiler Features:
  * SMTChecker: Support named arguments in function calls.
 
+Language Features:
+ * Scanner: Generates a parser error when comments do contain an unbalanced or underflowing set of unicode direction override markers (LRO, RLO, PDF)
 
 ### 0.7.5 (2020-11-18)
 
