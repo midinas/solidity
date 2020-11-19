@@ -334,7 +334,7 @@ BOOST_AUTO_TEST_CASE(validation_function_type)
 			function i(function () external[] calldata a) external pure returns (uint r) { a[0]; r = 4; }
 		}
 	)";
-	bool newDecoder = solidity::test::CommonOptions::get().useABIEncoderV2;
+	bool newDecoder = !solidity::test::CommonOptions::get().useABIEncoderV1;
 	string validFun{"01234567890123456789abcd"};
 	string invalidFun{"01234567890123456789abcdX"};
 	BOTH_ENCODERS(

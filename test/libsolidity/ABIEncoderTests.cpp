@@ -166,7 +166,7 @@ BOOST_AUTO_TEST_CASE(memory_array_one_dim)
 		}
 	)";
 
-	if (!solidity::test::CommonOptions::get().useABIEncoderV2)
+	if (solidity::test::CommonOptions::get().useABIEncoderV1)
 	{
 		compileAndRun(sourceCode);
 		callContractFunction("f()");

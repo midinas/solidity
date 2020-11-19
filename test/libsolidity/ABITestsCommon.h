@@ -21,6 +21,7 @@
 namespace solidity::frontend::test
 {
 
+// TODO
 static std::string const NewEncoderPragma = "pragma experimental ABIEncoderV2;\n";
 
 #define NEW_ENCODER(CODE) \
