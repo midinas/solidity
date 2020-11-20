@@ -24,7 +24,7 @@
 #include <libyul/optimiser/ASTWalker.h>
 #include <libyul/SideEffects.h>
 #include <libyul/optimiser/CallGraphGenerator.h>
-#include <libyul/AsmData.h>
+#include <libyul/ASTForward.h>
 
 #include <set>
 

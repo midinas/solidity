@@ -23,8 +23,7 @@
 
 #include <libevmasm/SimplificationRule.h>
 
-#include <libyul/AsmDataForward.h>
-#include <libyul/AsmData.h>
+#include <libyul/ASTForward.h>
 
 #include <libsolutil/CommonData.h>
 
