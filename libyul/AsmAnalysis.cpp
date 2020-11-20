@@ -668,3 +668,8 @@ bool AsmAnalyzer::validateInstructions(evmasm::Instruction _instr, SourceLocatio
 
 	return true;
 }
+
+bool AsmAnalyzer::validateInstructions(FunctionCall const& _functionCall)
+{
+	return validateInstructions(_functionCall.functionName.name.str(), _functionCall.functionName.location);
+}
