@@ -22,6 +22,7 @@
 #include <libyul/optimiser/BlockHasher.h>
 #include <libyul/optimiser/SyntacticalEquality.h>
 #include <libyul/Utilities.h>
+
 #include <libsolutil/CommonData.h>
 
 using namespace std;

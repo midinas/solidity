@@ -28,7 +28,6 @@
 #include <libyul/optimiser/FunctionHoister.h>
 #include <libyul/optimiser/FunctionGrouper.h>
 #include <libyul/AsmPrinter.h>
-#include <libyul/AsmData.h>
 
 #include <boost/test/unit_test.hpp>
 

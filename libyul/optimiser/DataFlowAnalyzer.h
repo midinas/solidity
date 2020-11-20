@@ -26,7 +26,7 @@
 #include <libyul/optimiser/ASTWalker.h>
 #include <libyul/optimiser/KnowledgeBase.h>
 #include <libyul/YulString.h>
-#include <libyul/AsmData.h>
+#include <libyul/ASTForward.h>
 #include <libyul/SideEffects.h>
 
 // TODO avoid
