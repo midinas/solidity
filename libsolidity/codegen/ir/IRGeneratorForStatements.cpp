@@ -804,20 +804,6 @@ bool IRGeneratorForStatements::visit(BinaryOperation const& _binOp)
 	return false;
 }
 
-bool IRGeneratorForStatements::visit(FunctionCall const& _functionCall)
-{
-	setLocation(_functionCall);
-	FunctionTypePointer functionType = dynamic_cast<FunctionType const*>(&type(_functionCall.expression()));
-	if (
-		functionType &&
-		functionType->kind() == FunctionType::Kind::Internal &&
-		IRHelpers::referencedFunctionDeclaration(_functionCall.expression())
-	)
-		m_context.internalFunctionCalledDirectly(_functionCall.expression());
-
-	return true;
-}
-
 void IRGeneratorForStatements::endVisit(FunctionCall const& _functionCall)
 {
 	setLocation(_functionCall);
@@ -1582,7 +1568,8 @@ void IRGeneratorForStatements::endVisit(MemberAccess const& _memberAccess)
 		if (memberFunctionType->kind() == FunctionType::Kind::Internal)
 		{
 			define(IRVariable(_memberAccess).part("functionIdentifier")) << to_string(functionDefinition.id()) << "\n";
-			m_context.internalFunctionAccessed(_memberAccess, functionDefinition);
+			if (!_memberAccess.annotation().calledDirectly)
+				m_context.internalFunctionAccessed(_memberAccess, functionDefinition);
 		}
 		else
 		{
@@ -1612,7 +1599,8 @@ void IRGeneratorForStatements::endVisit(MemberAccess const& _memberAccess)
 			define(_memberAccess) << to_string(resolvedFunctionDef.id()) << "\n";
 			solAssert(resolvedFunctionDef.functionType(true), "");
 			solAssert(resolvedFunctionDef.functionType(true)->kind() == FunctionType::Kind::Internal, "");
-			m_context.internalFunctionAccessed(_memberAccess, resolvedFunctionDef);
+			if (!_memberAccess.annotation().calledDirectly)
+				m_context.internalFunctionAccessed(_memberAccess, resolvedFunctionDef);
 		}
 		// ordinary contract type
 		else if (Declaration const* declaration = _memberAccess.annotation().referencedDeclaration)
@@ -1876,7 +1864,8 @@ void IRGeneratorForStatements::endVisit(MemberAccess const& _memberAccess)
 					if (auto const* function = dynamic_cast<FunctionDefinition const*>(_memberAccess.annotation().referencedDeclaration))
 					{
 						define(_memberAccess) << to_string(function->id()) << "\n";
-						m_context.internalFunctionAccessed(_memberAccess, *function);
+						if (!_memberAccess.annotation().calledDirectly)
+							m_context.internalFunctionAccessed(_memberAccess, *function);
 					}
 					else
 						solAssert(false, "Function not found in member access");
@@ -1956,7 +1945,8 @@ void IRGeneratorForStatements::endVisit(MemberAccess const& _memberAccess)
 			solAssert(*_memberAccess.annotation().requiredLookup == VirtualLookup::Static, "");
 
 			define(_memberAccess) << to_string(function->id()) << "\n";
-			m_context.internalFunctionAccessed(_memberAccess, *function);
+			if (!_memberAccess.annotation().calledDirectly)
+				m_context.internalFunctionAccessed(_memberAccess, *function);
 		}
 		break;
 	}
@@ -2198,7 +2188,8 @@ void IRGeneratorForStatements::endVisit(Identifier const& _identifier)
 
 		solAssert(resolvedFunctionDef.functionType(true), "");
 		solAssert(resolvedFunctionDef.functionType(true)->kind() == FunctionType::Kind::Internal, "");
-		m_context.internalFunctionAccessed(_identifier, resolvedFunctionDef);
+		if (!_identifier.annotation().calledDirectly)
+			m_context.internalFunctionAccessed(_identifier, resolvedFunctionDef);
 	}
 	else if (VariableDeclaration const* varDecl = dynamic_cast<VariableDeclaration const*>(declaration))
 		handleVariableReference(*varDecl, _identifier);
