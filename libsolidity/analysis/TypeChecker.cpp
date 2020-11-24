@@ -2265,6 +2265,8 @@ bool TypeChecker::visit(FunctionCall const& _functionCall)
 	vector<ASTPointer<Expression const>> const& arguments = _functionCall.arguments();
 	bool argumentsArePure = true;
 
+	_functionCall.expression().annotation().calledDirectly = true;
+
 	// We need to check arguments' type first as they will be needed for overload resolution.
 	for (ASTPointer<Expression const> const& argument: arguments)
 	{
